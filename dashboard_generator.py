@@ -1,12 +1,10 @@
 # dashboard_generator.py
 import os
 import csv
+import datetime
 
-print("-----------------------")
-print("MONTH: March 2018")
 
-print("-----------------------")
-print("CRUNCHING THE DATA...")
+
 
 print("-----------------------")
 print("TOTAL MONTHLY SALES: $12,000.71")
@@ -50,5 +48,14 @@ with open(csv_filepath, "r") as csv_file:
 
 # printing the correct month
 
-month = str((choice[10:12]))
-print(month)
+month = int((choice[10:12]))
+year = int((choice[6:10]))
+
+month_year = datetime.date(year,month,1)
+
+print("-----------------------")
+print(month_year.strftime("%B, %Y"))
+
+print("-----------------------")
+print("CRUNCHING THE DATA...")
+
