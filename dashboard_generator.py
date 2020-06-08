@@ -1,5 +1,6 @@
 # dashboard_generator.py
 import os
+import csv
 
 print("-----------------------")
 print("MONTH: March 2018")
@@ -24,7 +25,6 @@ print("VISUALIZING THE DATA...")
 data = os.path.join(os.path.dirname(__file__), "data", "monthly-sales")
 
 
-print("-----------------------")
 
 monthly_data = (os.listdir(data))
 for single_month in monthly_data:
@@ -37,6 +37,18 @@ choice = input("Please select a monthly data package from the list above: ")
 while os.path.isfile(os.path.join(data, choice)) == False:
     if os.path.isfile(os.path.join(data, choice)) == False:
         choice = input("This file does not exist in this folder - Please select a monthly data package from the specified list: ")
-    if os.path.isfile(os.path.join(data, choice)) == True:
-        print("This file name is ok")
-    
+    else:
+        print("-----------------------")
+        
+        
+csv_filepath = os.path.join("data", "monthly-sales", choice)
+
+rows = []
+
+with open(csv_filepath, "r") as csv_file:
+    reader = csv.DictReader(csv_file)
+    for row in reader:
+        rows.append(dict(row))
+
+print(rows)
+
