@@ -20,10 +20,7 @@ print("  3) etc.")
 print("-----------------------")
 print("VISUALIZING THE DATA...")
 
-## prints data in a readable list - https://realpython.com/working-with-files-in-python/#directory-listing-in-modern-python-versions
-
 data = os.path.join(os.path.dirname(__file__), "data", "monthly-sales")
-
 
 
 monthly_data = (os.listdir(data))
@@ -38,9 +35,10 @@ while os.path.isfile(os.path.join(data, choice)) == False:
     if os.path.isfile(os.path.join(data, choice)) == False:
         choice = input("This file does not exist in this folder - Please select a monthly data package from the specified list: ")
     else:
-        print("-----------------------")
+        break
         
-        
+# making the csv file readable
+
 csv_filepath = os.path.join("data", "monthly-sales", choice)
 
 rows = []
@@ -50,5 +48,7 @@ with open(csv_filepath, "r") as csv_file:
     for row in reader:
         rows.append(dict(row))
 
-print(rows)
+# printing the correct month
 
+month = str((choice[10:12]))
+print(month)
