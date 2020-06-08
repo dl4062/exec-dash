@@ -3,11 +3,20 @@ import os
 import csv
 import datetime
 
+def to_usd(my_price):
+    """
+    Converts a numeric value to usd-formatted string, for printing and display purposes.
+
+    Param: my_price (int or float) like 4000.444444
+
+    Example: to_usd(4000.444444)
+
+    Returns: $4,000.44
+    """
+    return f"${my_price:,.2f}" #> $12,000.71
 
 
 
-print("-----------------------")
-print("TOTAL MONTHLY SALES: $12,000.71")
 
 print("-----------------------")
 print("TOP SELLING PRODUCTS:")
@@ -59,3 +68,8 @@ print(month_year.strftime("%B, %Y"))
 print("-----------------------")
 print("CRUNCHING THE DATA...")
 
+sales_prices = [float(row["sales price"]) for row in rows]
+total_sales = sum(sales_prices)
+
+print("-----------------------")
+print("TOTAL MONTHLY SALES: ", to_usd(total_sales))
