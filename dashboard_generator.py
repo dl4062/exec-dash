@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt; plt.rcdefaults
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
+import matplotlib.ticker as tick
 
 
 
@@ -122,7 +123,7 @@ for price in sorted_list:
 def make_autopct(sizes):
     def my_autopct(pct):
         total = sum(sizes)
-        val = int((pct*total/100.0)
+        val = float(pct*total/100.0)
         return '{p:.2f}%  (${v:.2f})'.format(p=pct,v=val)
     return my_autopct
 
@@ -132,8 +133,18 @@ ax1.pie(sizes, labels=labels, autopct = make_autopct(sizes))
 ax1.axis('equal')
 plt.show()
 
+
 #https://stackoverflow.com/questions/332289/how-do-you-change-the-size-of-figures-drawn-with-matplotlib
 figure(num=None, figsize=(15, 12), dpi=80)
+
+ax = plt.subplots()
+
+#ax.plot(y)
+
+def y_fmt(y):
+    return f"${y:,.2f}"
+
+ax.yaxis.set_major_formatter(tick.FuncFormatter(y_fmt))
 
 y_pos = np.arange(len(labels))
 
