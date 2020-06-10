@@ -21,11 +21,7 @@ def to_usd(my_price):
 
 
 
-print("-----------------------")
-print("TOP SELLING PRODUCTS:")
-print("  1) Button-Down Shirt: $6,960.35")
-print("  2) Super Soft Hoodie: $1,875.00")
-print("  3) etc.")
+
 
 print("-----------------------")
 print("VISUALIZING THE DATA...")
@@ -92,8 +88,17 @@ product_groups = itertools.groupby(sorted_products, key=itemgetter("product"))
 
 for product, product_rows in product_groups:
     month_sales = sum([float(row["sales price"]) for row in product_rows])
-    combined_list.append({"name": product, "monthly sales": to_usd(month_sales)})
+    combined_list.append({"name": product, "monthly sales": month_sales})
 
-sorted_list = sorted(combined_list, key=operator.itemgetter("monthly sales"), reverse=True)
+sorted_list = sorted(combined_list, key=itemgetter("monthly sales"), reverse=True)
 
-breakpoint()
+print("-----------------------")
+print("TOP SELLING PRODUCTS:")
+
+rank = 0
+for top_selling in sorted_list:
+    rank = rank + 1
+    print(str(rank) + ".", top_selling["name"] + ":", to_usd(top_selling["monthly sales"]))
+    
+
+
