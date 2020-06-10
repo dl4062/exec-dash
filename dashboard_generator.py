@@ -2,6 +2,9 @@
 import os
 import csv
 import datetime
+import itertools
+from operator import itemgetter
+import operator
 
 def to_usd(my_price):
     """
@@ -73,3 +76,24 @@ total_sales = sum(sales_prices)
 
 print("-----------------------")
 print("TOTAL MONTHLY SALES: ", to_usd(total_sales))
+
+sold_products = []
+
+for product in rows:
+    sold_products.append(product["product"])
+
+sold_products = set(sold_products)
+
+combined_list = []
+
+sorted_products = sorted(rows, key=itemgetter("product"))
+
+product_groups = itertools.groupby(sorted_products, key=itemgetter("product"))
+
+for product, product_rows in product_groups:
+    month_sales = sum([float(row["sales price"]) for row in product_rows])
+    combined_list.append({"name": product, "monthly sales": to_usd(month_sales)})
+
+sorted_list = sorted(combined_list, key=operator.itemgetter("monthly sales"), reverse=True)
+
+breakpoint()
