@@ -5,7 +5,13 @@ import datetime
 import itertools
 from operator import itemgetter
 import operator
+import matplotlib.pyplot as plt; plt.rcdefaults
+import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.pyplot import figure
+
+
+
 
 def to_usd(my_price):
     """
@@ -109,19 +115,30 @@ for name in sorted_list:
     labels.append(name["name"])
  
 for price in sorted_list:
-    sizes.append(price["monthly sales"]) #removed str()
+    sizes.append(price["monthly sales"])
 
 
 # https://stackoverflow.com/questions/6170246/how-do-i-use-matplotlib-autopct#:~:text=autopct%20enables%20you%20to%20display,set%20to%20the%20string%20'%25.
 def make_autopct(sizes):
     def my_autopct(pct):
         total = sum(sizes)
-        val = int(round(pct*total/100.0))
-        return '{p:.2f}%  (${v:d})'.format(p=pct,v=val)
+        val = int((pct*total/100.0)
+        return '{p:.2f}%  (${v:.2f})'.format(p=pct,v=val)
     return my_autopct
+
 
 fig1, ax1 = plt.subplots()
 ax1.pie(sizes, labels=labels, autopct = make_autopct(sizes))
 ax1.axis('equal')
 plt.show()
 
+#https://stackoverflow.com/questions/332289/how-do-you-change-the-size-of-figures-drawn-with-matplotlib
+figure(num=None, figsize=(15, 12), dpi=80)
+
+y_pos = np.arange(len(labels))
+
+plt.bar(y_pos, sizes, align='center', alpha=0.5)
+plt.xticks(y_pos, labels)
+plt.ylabel("Sales ($)")
+plt.title("Monthly Sales per Product")
+plt.show()
