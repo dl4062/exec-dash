@@ -5,6 +5,7 @@ import datetime
 import itertools
 from operator import itemgetter
 import operator
+import matplotlib.pyplot as plt
 
 def to_usd(my_price):
     """
@@ -101,4 +102,26 @@ for top_selling in sorted_list:
     print(str(rank) + ".", top_selling["name"] + ":", to_usd(top_selling["monthly sales"]))
     
 
+labels = []
+sizes = []
+
+for name in sorted_list:
+    labels.append(name["name"])
+ 
+for price in sorted_list:
+    sizes.append(price["monthly sales"]) #removed str()
+
+
+# https://stackoverflow.com/questions/6170246/how-do-i-use-matplotlib-autopct#:~:text=autopct%20enables%20you%20to%20display,set%20to%20the%20string%20'%25.
+def make_autopct(sizes):
+    def my_autopct(pct):
+        total = sum(sizes)
+        val = int(round(pct*total/100.0))
+        return '{p:.2f}%  (${v:d})'.format(p=pct,v=val)
+    return my_autopct
+
+fig1, ax1 = plt.subplots()
+ax1.pie(sizes, labels=labels, autopct = make_autopct(sizes))
+ax1.axis('equal')
+plt.show()
 
