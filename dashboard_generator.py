@@ -111,6 +111,7 @@ for top_selling in sorted_list:
 
 labels = []
 sizes = []
+date = str(month_year.strftime("%B %Y"))
 
 for name in sorted_list:
     labels.append(name["name"])
@@ -128,9 +129,11 @@ def make_autopct(sizes):
     return my_autopct
 
 
-fig1, ax1 = plt.subplots()
+fig1, ax1 = plt.subplots(figsize=(15,12))
 ax1.pie(sizes, labels=labels, autopct = make_autopct(sizes))
 ax1.axis('equal')
+
+plt.title("Sales per Product for %s" % date)
 plt.tight_layout()
 plt.show()
 
@@ -138,26 +141,15 @@ plt.show()
 
 
 fig, ax = plt.subplots(figsize=(15,12))
-#figure(num=None, figsize=(15, 12), dpi=80)
 usd_formatter =  tick.FormatStrFormatter('$%1.2f')
 ax.yaxis.set_major_formatter(usd_formatter)
 
-#https://stackoverflow.com/questions/332289/how-do-you-change-the-size-of-figures-drawn-with-matplotlib
 
-
-
-#ax.plot(y)
-
-#def y_fmt(y):
-#    return f"${y:,.2f}"
-
-
-#ax.yaxis.set_major_formatter(tick.FuncFormatter(y_fmt))
 
 y_pos = np.arange(len(labels))
 
 plt.bar(y_pos, sizes, align='center', alpha=0.5)
 plt.xticks(y_pos, labels)
 plt.ylabel("Sales ($)")
-plt.title("Monthly Sales per Product")
+plt.title("Sales per Product for %s" % date)
 plt.show()
