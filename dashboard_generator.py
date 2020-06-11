@@ -131,20 +131,28 @@ def make_autopct(sizes):
 fig1, ax1 = plt.subplots()
 ax1.pie(sizes, labels=labels, autopct = make_autopct(sizes))
 ax1.axis('equal')
+plt.tight_layout()
 plt.show()
 
 
-#https://stackoverflow.com/questions/332289/how-do-you-change-the-size-of-figures-drawn-with-matplotlib
-figure(num=None, figsize=(15, 12), dpi=80)
 
-ax = plt.subplots()
+
+fig, ax = plt.subplots(figsize=(15,12))
+#figure(num=None, figsize=(15, 12), dpi=80)
+usd_formatter =  tick.FormatStrFormatter('$%1.2f')
+ax.yaxis.set_major_formatter(usd_formatter)
+
+#https://stackoverflow.com/questions/332289/how-do-you-change-the-size-of-figures-drawn-with-matplotlib
+
+
 
 #ax.plot(y)
 
-def y_fmt(y):
-    return f"${y:,.2f}"
+#def y_fmt(y):
+#    return f"${y:,.2f}"
 
-ax.yaxis.set_major_formatter(tick.FuncFormatter(y_fmt))
+
+#ax.yaxis.set_major_formatter(tick.FuncFormatter(y_fmt))
 
 y_pos = np.arange(len(labels))
 
