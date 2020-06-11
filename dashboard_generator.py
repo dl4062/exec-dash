@@ -30,10 +30,6 @@ def to_usd(my_price):
 
 
 
-
-print("-----------------------")
-print("VISUALIZING THE DATA...")
-
 data = os.path.join(os.path.dirname(__file__), "data", "monthly-sales")
 
 
@@ -120,6 +116,11 @@ for price in sorted_list:
     sizes.append(price["monthly sales"])
 
 
+
+print("-----------------------")
+print("VISUALIZING THE DATA...")
+
+
 # https://stackoverflow.com/questions/6170246/how-do-i-use-matplotlib-autopct#:~:text=autopct%20enables%20you%20to%20display,set%20to%20the%20string%20'%25.
 def make_autopct(sizes):
     def my_autopct(pct):
@@ -129,7 +130,7 @@ def make_autopct(sizes):
     return my_autopct
 
 
-fig1, ax1 = plt.subplots(figsize=(15,12))
+fig1, ax1 = plt.subplots(figsize=(10,8))
 ax1.pie(sizes, labels=labels, autopct = make_autopct(sizes))
 ax1.axis('equal')
 
